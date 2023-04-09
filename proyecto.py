@@ -29,13 +29,27 @@ def ventana1():
     imgI = ImageTk.PhotoImage (Image.open("Princi.jpg"))
     fondo = Label(ventanaPrin,image= imgI)
     fondo.pack(side="top", anchor="center")
-    
+
+    #VENTANA DONDE ESTÁ LA INFORMACIÓN PERSONAL
+    def ventana2():
+        ventanaPrin.withdraw()
+        ventanaInfo = Toplevel()
+        ventanaInfo.title("PERSONAL INFORMATION")
+        ventanaInfo.geometry("540x690")
+        ventanaInfo.resizable(False,False)
+        imginfo = ImageTk.PhotoImage(Image.open("INFO.jpg"))
+        fondo2 = Label(ventanaInfo, image= imginfo)
+        fondo2.pack(side="top", anchor="center")
+        
+        ventanaInfo.mainloop()
+        
+    """B O T O N E S  D E  L A  V E N T A N A  P R I N C I P A L"""
     #Botón de cerrar
     byebye = Button(ventanaPrin, text="E X I T", fg="#C6BCDE", font=("Open Sans Extrabold", 12), background="#6069AE", borderwidth=3, command=ventanaPrin.destroy)
     byebye.place(x=1200, y=665, anchor=SW)
     
     #Botón para abrir la ventana con mi información personal
-    infopersonal = Button(ventanaPrin, text="I N F O", fg="#C6BCDE", font=("Open Sans Extrabold", 12), background= "#6069AE", borderwidth=3)
+    infopersonal = Button(ventanaPrin, text="I N F O", fg="#C6BCDE", font=("Open Sans Extrabold", 12), background= "#6069AE", borderwidth=3, command=ventana2)
     infopersonal.place(x=120, y=665, anchor=SE)
     
     #Botón para abrir ventana que explica cómo jugar el juego
@@ -53,6 +67,10 @@ def ventana1():
     #Botón para abrir ventana de juego segundo nivel
     level2 = Button(ventanaPrin, text="LEVEL 2", fg="#C6BCDE", font=("SDGlitchDemo", 33), background="#B04FAD", borderwidth=4, activebackground="#6069AE")
     level2.place(x=667, y=495, anchor=S)
+    
+    #Botón para abrir ventana de juego tercer nivel
+    level2 = Button(ventanaPrin, text="LEVEL 3", fg="#C6BCDE", font=("SDGlitchDemo", 33), background="#B04FAD", borderwidth=4, activebackground="#6069AE")
+    level2.place(x=1059, y=495, anchor=S)
     
     
     ventanaPrin.mainloop()
