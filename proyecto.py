@@ -29,10 +29,9 @@ def ventana1():
     imgI = ImageTk.PhotoImage (Image.open("Princi.jpg"))
     fondo = Label(ventanaPrin,image= imgI)
     fondo.pack(side="top", anchor="center")
-
+    
     #VENTANA DONDE ESTÁ LA INFORMACIÓN PERSONAL
     def ventana2():
-        ventanaPrin.withdraw()
         ventanaInfo = Toplevel()
         ventanaInfo.title("PERSONAL INFORMATION")
         ventanaInfo.geometry("540x690")
@@ -41,8 +40,10 @@ def ventana1():
         fondo2 = Label(ventanaInfo, image= imginfo)
         fondo2.pack(side="top", anchor="center")
         
+        #Botón que devuelve a la ventana principal
+        backy = Button(ventanaInfo, text="Back", fg="#C6BCDE", font=("Open Sans Extrabold", 8), background="#071E26", borderwidth=3, command=ventanaInfo.destroy)
+        backy.place(x=500, y=680, anchor=SW)
         ventanaInfo.mainloop()
-        
     """B O T O N E S  D E  L A  V E N T A N A  P R I N C I P A L"""
     #Botón de cerrar
     byebye = Button(ventanaPrin, text="E X I T", fg="#C6BCDE", font=("Open Sans Extrabold", 12), background="#6069AE", borderwidth=3, command=ventanaPrin.destroy)
