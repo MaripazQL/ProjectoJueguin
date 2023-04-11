@@ -19,6 +19,7 @@ lightblue = "#95DEFF"
 oceanblue = "#004B6B"
 darky = "#071E26"
 
+
 #Ventana principal con la temática del juego
 def ventana1():
     ventanaPrin = Tk()
@@ -45,6 +46,8 @@ def ventana1():
         backy.place(x=500, y=680, anchor=SW)
         ventanaInfo.mainloop()
      
+     
+     
      #VENTANA DONDE  ESTÁN LAS INDICACIONES DE CÓMO JUGAR    
     def ventana3():
         ventanaComo = Toplevel()
@@ -58,9 +61,9 @@ def ventana1():
         #BOTÓN QUE REGRESA A LA PANTALLA PRINCIPAL
         regreso = Button(ventanaComo, text="Back", fg="#071E26", font=("Open Sans Extrabold", 8), background="#B04FAD", borderwidth=3, command=ventanaComo.destroy)
         regreso.place(x=900, y=510, anchor=SW)
+        ventanaComo.mainloop() #Importante 
         
         
-        ventanaComo.mainloop()
         
     # VENTANA DONDE ESTÁ EL HISTORIAL DE LOS MEJORES PUNTAJES
     def ventana4 ():
@@ -69,30 +72,66 @@ def ventana1():
         
         ventanaScores.mainloop()
         
+        
+        
     #VENTANA DONDE SE MUESTRA EL NIVEL 1
     def ventana5 ():
         ventanaN1 = Toplevel()
-        ventanaN1.title("BEST SCORES")
-    
+        ventanaN1.title("Nivel 1")
+        ventanaN1.resizable(False,False)
+
+        #CANVAS DEL NIVEL 1 DEL JUEGO. 
+        canvasN1 = Canvas(ventanaN1, height=564, width=564)
+        canvasN1.pack(side="top", anchor="center")
+        
+        #IMAGEN DE FONDO DEL JUEGO
+        imgFN1 = ImageTk.PhotoImage(Image.open("nivel1.jpg"))
+        canvasN1.create_image(564,1, anchor= NE, image= imgFN1)
+        
+        #IMAGEN DE LA NAVE
+        imgNAVE = ImageTk.PhotoImage(Image.open("nave.png"))
+        canvasN1.create_image(100,35, image= imgNAVE)
+        
+        
+        #IMAGEN CORAZONES DE VIDA1
+        imgCORA1 = ImageTk.PhotoImage(Image.open("Heart.png"))
+        canvasN1.create_image(40,2,anchor=NE, image=imgCORA1)
+        
+        #IMAGEN CORAZONES DE VIDA2
+        imgCORA2 = ImageTk.PhotoImage(Image.open("Heart.png"))
+        canvasN1.create_image(80,2,anchor=NE, image=imgCORA2)
+        
+        #IMAGEN CORAZONES DE VIDA3
+        imgCORA3 = ImageTk.PhotoImage(Image.open("Heart.png"))
+        canvasN1.create_image(120,2,anchor=NE, image=imgCORA3)
+        
+        #BOTÓN DE REGRESAR A LA VENTANA PRINCIPAL
+        comeback = Button(canvasN1, text="End", fg="black", font=("Open Sans Extrabold", 8), background="#C6BCDE", borderwidth=3, command=ventanaN1.destroy)
+        comeback.place(x=530, y=560, anchor=SW)
         ventanaN1.mainloop()
+        
+        
         
     #VENTANA DONDE SE MUESTRA EL NIVEL 2
     def ventana6 ():
         ventanaN2 = Toplevel()
-        ventanaN2.title("BEST SCORES")
+        ventanaN2.title("Nivel 2")
     
         ventanaN2.mainloop()
+        
+        
         
     #VENTANA DONDE SE MUESTRA EL NIVEL 3
     def ventana7 ():
         ventanaN3 = Toplevel()
-        ventanaN3.title("BEST SCORES")
+        ventanaN3.title("Nivel 3")
     
-        ventanaN3.mainloop()
+        ventanaN3.mainloop()       
+        
         
     """B O T O N E S  D E  L A  V E N T A N A  P R I N C I P A L"""
     #Botón de cerrar
-    byebye = Button(ventanaPrin, text="E X I T", fg="#C6BCDE", font=("Open Sans Extrabold", 12), background="#6069AE", borderwidth=3, command=ventanaPrin.destroy)
+    byebye =Button(ventanaPrin, text="E X I T", fg="#C6BCDE", font=("Open Sans Extrabold", 12), background="#6069AE", borderwidth=3, command=ventanaPrin.destroy)
     byebye.place(x=1200, y=665, anchor=SW)
     
     #Botón para abrir la ventana con mi información personal
@@ -116,8 +155,8 @@ def ventana1():
     level2.place(x=667, y=495, anchor=S)
     
     #Botón para abrir ventana de juego tercer nivel
-    level2 = Button(ventanaPrin, text="LEVEL 3", fg="#C6BCDE", font=("SDGlitchDemo", 33), background="#B04FAD", borderwidth=4, activebackground="#6069AE", command=ventana7)
-    level2.place(x=1059, y=495, anchor=S)
+    level3 = Button(ventanaPrin, text="LEVEL 3", fg="#C6BCDE", font=("SDGlitchDemo", 33), background="#B04FAD", borderwidth=4, activebackground="#6069AE", command=ventana7)
+    level3.place(x=1059, y=495, anchor=S)
     
     
     ventanaPrin.mainloop()
