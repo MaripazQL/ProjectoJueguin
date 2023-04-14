@@ -7,6 +7,10 @@ Maripaz Quesada Leitón 2023073101"""
 #Importaciones necesarias para el funcionamiento del programa
 from tkinter import *
 from PIL import Image, ImageTk
+import random
+import threading
+import subprocess
+from pygame import mixer
 
 #c o l o r e s
 whitish = "#C6BCDE"
@@ -18,8 +22,6 @@ slay = "#B04FAD"
 lightblue = "#95DEFF"
 oceanblue = "#004B6B"
 darky = "#071E26"
-
-
 #Ventana principal con la temática del juego
 def ventana1():
     ventanaPrin = Tk()
@@ -27,12 +29,22 @@ def ventana1():
     ventanaPrin.geometry("1300x700")
     ventanaPrin.resizable(False,False)
     ventanaPrin.config(bg="#22234A")
+    #Fondo de la ventana principal
     imgI = ImageTk.PhotoImage (Image.open("Princi.jpg"))
     fondo = Label(ventanaPrin,image= imgI)
-    fondo.pack(side="top", anchor="center")
+    fondo.pack(side="top", anchor="center")      
+    
+    
+        #FUNCIÓN QUE REPRODUCE MÚSICA EN VENTANA ´PRINCIPAL
+    mixer.init()
+
+    mixer.music.load("soundtrack1.mp3")
+    mixer.music.play(-1)
+    
     
     #VENTANA DONDE ESTÁ LA INFORMACIÓN PERSONAL
     def ventana2():
+        ventanaPrin.withdraw()
         ventanaInfo = Toplevel()
         ventanaInfo.title("PERSONAL INFORMATION")
         ventanaInfo.geometry("540x690")
@@ -41,15 +53,20 @@ def ventana1():
         fondo2 = Label(ventanaInfo, image= imginfo)
         fondo2.pack(side="top", anchor="center")
         
+        #FUNCIÓN QUE ELIMINA LA VENTANA ACTUAL Y DEVUELVE A LA VENTANA PRINCIPAL
+        def endINFO():
+            ventanaPrin.deiconify()
+            ventana2.destroy()
+        
         #Botón que devuelve a la ventana principal
-        backy = Button(ventanaInfo, text="Back", fg="#C6BCDE", font=("Open Sans Extrabold", 8), background="#071E26", borderwidth=3, command=ventanaInfo.destroy)
+        backy = Button(ventanaInfo, text="Back", fg="#C6BCDE", font=("Open Sans Extrabold", 8), background="#071E26", borderwidth=3, command=(endINFO))
         backy.place(x=500, y=680, anchor=SW)
         ventanaInfo.mainloop()
-     
-     
-     
-     #VENTANA DONDE  ESTÁN LAS INDICACIONES DE CÓMO JUGAR    
+        
+        
+        #VENTANA DONDE  ESTÁN LAS INDICACIONES DE CÓMO JUGAR    
     def ventana3():
+        ventanaPrin.withdraw()
         ventanaComo = Toplevel()
         ventanaComo.title("HOW TO PLAY")
         ventanaComo.geometry("960x540")
@@ -58,8 +75,13 @@ def ventana1():
         fondo3 = Label(ventanaComo, image= imgComo)
         fondo3.pack(side="top", anchor="center")
         
+        #FUNCIÓN QUE ELIMINA LA VENTANA ACTUAL Y DEVUELVE A LA VENTANA PRINCIPAL
+        def endINDI():
+            ventanaPrin.deiconify()
+            ventana3.destroy()
+        
         #BOTÓN QUE REGRESA A LA PANTALLA PRINCIPAL
-        regreso = Button(ventanaComo, text="Back", fg="#071E26", font=("Open Sans Extrabold", 8), background="#B04FAD", borderwidth=3, command=ventanaComo.destroy)
+        regreso = Button(ventanaComo, text="Back", fg="#071E26", font=("Open Sans Extrabold", 8), background="#B04FAD", borderwidth=3, command=endINDI)
         regreso.place(x=900, y=510, anchor=SW)
         ventanaComo.mainloop() #Importante 
         
@@ -69,6 +91,8 @@ def ventana1():
     def ventana4 ():
         ventanaScores = Toplevel()
         ventanaScores.title("BEST SCORES")
+        ventanaScores.geometry("500x500")
+        
         
         ventanaScores.mainloop()
         
@@ -90,8 +114,48 @@ def ventana1():
         
         #IMAGEN DE LA NAVE
         imgNAVE = ImageTk.PhotoImage(Image.open("nave.png"))
-        canvasN1.create_image(100,35, image= imgNAVE)
+        nave = canvasN1.create_image(100,35, image= imgNAVE)
         
+        #CÓDIGO QUE GENERA LOS BORDES PARA QUE LA NAVE NO SE SALGA
+        def naveBorde():
+            naveBordee = canvasN1.bbox(nave)
+            naveleft = naveBordee[0]
+            naveRight = naveBordee[2]
+            naveTop = naveBordee[1]
+            naveBottom = naveBordee[3]
+            
+            if naveleft < 0: #si el borde de la nave es menor que 0 (borde de la pantalla), que no avance
+                canvasN1.move(nave, 10, 0)
+            
+            elif naveTop < 0:
+                canvasN1.move(nave, 0, 10)
+                
+            elif naveRight > 564:
+                canvasN1.move(nave, -10, 0)
+                
+            elif naveBottom > 564:
+                canvasN1.move(nave, 0, -10)
+                
+        
+        # CÓDIGO QUE MUEVE LA NAVE Y LLAMA NAVEBORDE() CADA QUE SE MUEVE
+        def moveRight(event):
+            canvasN1.move(nave,10,0)
+            naveBorde()
+        def moveLeft(event):
+            canvasN1.move(nave,-10,0)
+            naveBorde()
+        def moveUp(event):
+            canvasN1.move(nave,0,-10)
+            naveBorde()
+        def moveDown(event):
+            canvasN1.move(nave,0,10)
+            naveBorde()
+            
+        #Conexión de teclas con la nave
+        canvasN1.bind_all("<w>", moveUp)
+        canvasN1.bind_all("<s>", moveDown)
+        canvasN1.bind_all("<a>", moveLeft)
+        canvasN1.bind_all("<d>", moveRight)
         
         #IMAGEN CORAZONES DE VIDA1
         imgCORA1 = ImageTk.PhotoImage(Image.open("Heart.png"))
@@ -116,7 +180,7 @@ def ventana1():
     def ventana6 ():
         ventanaN2 = Toplevel()
         ventanaN2.title("Nivel 2")
-    
+
         ventanaN2.mainloop()
         
         
@@ -125,10 +189,10 @@ def ventana1():
     def ventana7 ():
         ventanaN3 = Toplevel()
         ventanaN3.title("Nivel 3")
+
+        ventanaN3.mainloop() 
+
     
-        ventanaN3.mainloop()       
-        
-        
     """B O T O N E S  D E  L A  V E N T A N A  P R I N C I P A L"""
     #Botón de cerrar
     byebye =Button(ventanaPrin, text="E X I T", fg="#C6BCDE", font=("Open Sans Extrabold", 12), background="#6069AE", borderwidth=3, command=ventanaPrin.destroy)
@@ -161,4 +225,6 @@ def ventana1():
     
     ventanaPrin.mainloop()
 ventana1()
+
     
+
