@@ -11,6 +11,7 @@ import random
 import threading
 import subprocess
 from pygame import mixer
+#hola
 
 #c o l o r e s
 whitish = "#C6BCDE"
