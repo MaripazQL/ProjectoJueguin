@@ -22,6 +22,9 @@ slay = "#B04FAD"
 lightblue = "#95DEFF"
 oceanblue = "#004B6B"
 darky = "#071E26"
+
+
+
 #Ventana principal con la temática del juego
 def ventana1():
     ventanaPrin = Tk()
@@ -34,14 +37,14 @@ def ventana1():
     fondo = Label(ventanaPrin,image= imgI)
     fondo.pack(side="top", anchor="center")      
     
-    
-        #FUNCIÓN QUE REPRODUCE MÚSICA EN VENTANA ´PRINCIPAL
+    #FUNCIÓN QUE REPRODUCE MÚSICA EN VENTANA ´PRINCIPAL
     mixer.init()
-
-    mixer.music.load("soundtrack1.mp3")
+    mixer.music.load("bombatronic.mp3")
     mixer.music.play(-1)
+    mixer.music.set_volume(0.5)
     
     
+    """wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"""
     #VENTANA DONDE ESTÁ LA INFORMACIÓN PERSONAL
     def ventana2():
         ventanaPrin.withdraw()
@@ -56,15 +59,15 @@ def ventana1():
         #FUNCIÓN QUE ELIMINA LA VENTANA ACTUAL Y DEVUELVE A LA VENTANA PRINCIPAL
         def endINFO():
             ventanaPrin.deiconify()
-            ventana2.destroy()
-        
+            ventanaInfo.destroy()
         #Botón que devuelve a la ventana principal
         backy = Button(ventanaInfo, text="Back", fg="#C6BCDE", font=("Open Sans Extrabold", 8), background="#071E26", borderwidth=3, command=(endINFO))
         backy.place(x=500, y=680, anchor=SW)
         ventanaInfo.mainloop()
         
         
-        #VENTANA DONDE  ESTÁN LAS INDICACIONES DE CÓMO JUGAR    
+    """wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"""    
+    #VENTANA DONDE  ESTÁN LAS INDICACIONES DE CÓMO JUGAR    
     def ventana3():
         ventanaPrin.withdraw()
         ventanaComo = Toplevel()
@@ -78,15 +81,14 @@ def ventana1():
         #FUNCIÓN QUE ELIMINA LA VENTANA ACTUAL Y DEVUELVE A LA VENTANA PRINCIPAL
         def endINDI():
             ventanaPrin.deiconify()
-            ventana3.destroy()
-        
+            ventanaComo.destroy()
         #BOTÓN QUE REGRESA A LA PANTALLA PRINCIPAL
         regreso = Button(ventanaComo, text="Back", fg="#071E26", font=("Open Sans Extrabold", 8), background="#B04FAD", borderwidth=3, command=endINDI)
         regreso.place(x=900, y=510, anchor=SW)
         ventanaComo.mainloop() #Importante 
         
         
-        
+    """wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"""
     # VENTANA DONDE ESTÁ EL HISTORIAL DE LOS MEJORES PUNTAJES
     def ventana4 ():
         ventanaScores = Toplevel()
@@ -97,7 +99,7 @@ def ventana1():
         ventanaScores.mainloop()
         
         
-        
+    """wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"""
     #VENTANA DONDE SE MUESTRA EL NIVEL 1
     def ventana5 ():
         ventanaN1 = Toplevel()
@@ -157,6 +159,8 @@ def ventana1():
         canvasN1.bind_all("<a>", moveLeft)
         canvasN1.bind_all("<d>", moveRight)
         
+        
+        
         #IMAGEN CORAZONES DE VIDA1
         imgCORA1 = ImageTk.PhotoImage(Image.open("Heart.png"))
         canvasN1.create_image(40,2,anchor=NE, image=imgCORA1)
@@ -169,27 +173,74 @@ def ventana1():
         imgCORA3 = ImageTk.PhotoImage(Image.open("Heart.png"))
         canvasN1.create_image(120,2,anchor=NE, image=imgCORA3)
         
-        #BOTÓN DE REGRESAR A LA VENTANA PRINCIPAL
-        comeback = Button(canvasN1, text="End", fg="black", font=("Open Sans Extrabold", 8), background="#C6BCDE", borderwidth=3, command=ventanaN1.destroy)
+        #FUNCIÓN QUE DEVUELVE A LA PANTAÑA PRINCIPAL Y ELIMINA LA ACTUAL
+        def chao():
+            ventanaPrin.deiconify()
+            ventanaN1.destroy()
+        #BOTÓN QUE EJECUTA LA FUNCIÓN CHAO
+        comeback = Button(canvasN1, text="End", fg="black", font=("Open Sans Extrabold", 8), background="#C6BCDE", borderwidth=3, command=chao)
         comeback.place(x=530, y=560, anchor=SW)
         ventanaN1.mainloop()
         
         
-        
+    """wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"""
     #VENTANA DONDE SE MUESTRA EL NIVEL 2
     def ventana6 ():
         ventanaN2 = Toplevel()
         ventanaN2.title("Nivel 2")
+        ventanaN2.geometry("702x507")
+        ventanaN2.resizable(False,False)
+        #IMAGEN DE FONDO DEL NIVEL 2
+        canvas2 = Canvas(ventanaN2, height=505, width=700)
+        canvas2.pack(side="top", anchor="center")
+        imgFN2 = ImageTk.PhotoImage(Image.open("FONDO2.jpg"))
+        canvas2.create_image(698,2,anchor=NE, image=imgFN2)
 
+        #IMAGEN NAVE NIVEL 2
+        imgNave2 = ImageTk.PhotoImage(Image.open("nave3.png"))
+        canvas2.create_image(101, 2, anchor= NE, image=imgNave2)
+
+        
+        #FUNCIÓN QUE ELIMINA LA VENTANA ACTUAL Y DEVUELVE A LA VENTANA PRINCIPAL
+        def ending():
+            ventanaPrin.deiconify()
+            ventanaN2.destroy()
+        #BOTÓN QUE EJECUTA LA FUNCIÓN ENDING
+        regreso = Button(ventanaN2, text="Back", fg="#C6BCDE", font=("Open Sans Extrabold", 8), background="#071E26", borderwidth=3, command=ending)
+        regreso.place(x=565, y=420, anchor=SW)
         ventanaN2.mainloop()
         
         
-        
+    """wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"""
     #VENTANA DONDE SE MUESTRA EL NIVEL 3
     def ventana7 ():
         ventanaN3 = Toplevel()
         ventanaN3.title("Nivel 3")
-
+        ventanaN3.geometry("850x700")
+        ventanaN3.resizable(False,False)
+        
+        #CANVAS DEL NIVEL 3
+        CanvasN3 = Canvas(ventanaN3, height=700, width=850)
+        CanvasN3.pack(side="top", anchor="center")
+        #IMAGEN DE FONDO NIVEL 3
+        imgN3 = ImageTk.PhotoImage(Image.open("nivel3.jpg"))
+        CanvasN3.create_image(845,2, anchor=NE, image= imgN3)
+        
+        #IMAGEN NAVE NIVEL 3
+        imgNave = ImageTk.PhotoImage(Image.open("nave3.png"))
+        CanvasN3.create_image(120,2, anchor=NE, image= imgNave)
+        
+        #IMAGEN DE ENEMIGOS
+        imgENE2 = ImageTk.PhotoImage(Image.open("enemigon3.png"))
+        CanvasN3.create_image(200,4, anchor=NW, image=imgENE2)
+        
+        #FUNCIÓN QUE ELIMINA LA VENTANA ACTUAL Y DEVUELVE A LA VENTANA PRINCIPAL
+        def FINISH():
+            ventanaPrin.deiconify()
+            ventana7.destroy()
+        #BOTÓN QUE EJECUTA LA FUNCIÓN FINISH
+        beback = Button(ventanaN3, text="Back", fg="#004B6B", font=("Open Sans Extrabold", 8), background="#B04FAD", borderwidth=3, command= FINISH)
+        beback.place(x=800, y=690, anchor=SW)
         ventanaN3.mainloop() 
 
     
@@ -225,6 +276,3 @@ def ventana1():
     
     ventanaPrin.mainloop()
 ventana1()
-
-    
-
