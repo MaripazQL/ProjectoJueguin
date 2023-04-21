@@ -188,7 +188,6 @@ def ventana1():
     def ventana6 ():
         ventanaN2 = Toplevel()
         ventanaN2.title("Nivel 2")
-        ventanaN2.geometry("702x507")
         ventanaN2.resizable(False,False)
         #IMAGEN DE FONDO DEL NIVEL 2
         canvas2 = Canvas(ventanaN2, height=505, width=700)
@@ -197,8 +196,49 @@ def ventana1():
         canvas2.create_image(698,2,anchor=NE, image=imgFN2)
 
         #IMAGEN NAVE NIVEL 2
-        imgNave2 = ImageTk.PhotoImage(Image.open("nave3.png"))
+        imgNave2 = ImageTk.PhotoImage(Image.open("nave2.png"))
         canvas2.create_image(101, 2, anchor= NE, image=imgNave2)
+        
+        def nave2Borde():
+            nave2Bordee = canvas2.bbox(imgNave2)
+            nave2left = nave2Bordee[0]
+            nave2Right = nave2Bordee[2]
+            nave2Top = nave2Bordee[1]
+            nave2Bottom = nave2Bordee[3]
+            
+            if nave2left < 0: #si el borde de la nave es menor que 0 (borde de la pantalla), que no avance
+                canvas2.move(imgNave2, 10, 0)
+            
+            elif nave2Top < 0:
+                canvas2.move(imgNave2, 0, 10)
+                
+            elif nave2Right > 505:
+                canvas2.move(imgNave2, -10, 0)
+                
+            elif nave2Bottom > 700:
+                canvas2.move(imgNave2, 0, -10)
+                
+        
+        # CÓDIGO QUE MUEVE LA NAVE Y LLAMA NAVEBORDE() CADA QUE SE MUEVE
+        def move2Right(event):
+            canvas2.move(imgNave2,10,0)
+            nave2Borde()
+        def move2Left(event):
+            canvas2.move(imgNave2,-10,0)
+            nave2Borde()
+        def move2Up(event):
+            canvas2.move(imgNave2,0,-10)
+            nave2Borde()
+        def move2Down(event):
+            canvas2.move(imgNave2,0,10)
+            nave2Borde()
+            
+        #Conexión de teclas con la nave
+        canvas2.bind_all("<w>", move2Up)
+        canvas2.bind_all("<s>", move2Down)
+        canvas2.bind_all("<a>", move2Left)
+        canvas2.bind_all("<d>", move2Right)
+        
 
         
         #FUNCIÓN QUE ELIMINA LA VENTANA ACTUAL Y DEVUELVE A LA VENTANA PRINCIPAL
@@ -216,15 +256,15 @@ def ventana1():
     def ventana7 ():
         ventanaN3 = Toplevel()
         ventanaN3.title("Nivel 3")
-        ventanaN3.geometry("850x700")
+        ventanaN3.geometry("730x626")
         ventanaN3.resizable(False,False)
         
         #CANVAS DEL NIVEL 3
-        CanvasN3 = Canvas(ventanaN3, height=700, width=850)
+        CanvasN3 = Canvas(ventanaN3, height=625, width=729)
         CanvasN3.pack(side="top", anchor="center")
         #IMAGEN DE FONDO NIVEL 3
         imgN3 = ImageTk.PhotoImage(Image.open("nivel3.jpg"))
-        CanvasN3.create_image(845,2, anchor=NE, image= imgN3)
+        CanvasN3.create_image(729,2, anchor=NE, image= imgN3)
         
         #IMAGEN NAVE NIVEL 3
         imgNave = ImageTk.PhotoImage(Image.open("nave3.png"))
